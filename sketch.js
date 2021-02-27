@@ -18,20 +18,23 @@ function setup() {
 
 	packageSprite=createSprite(width/2, 80, 10,10);
 	packageSprite.addImage(packageIMG)
-	packageSprite.scale=0.2
-
+	packageSprite.scale=0.2;
+	
+	//helicopter
 	helicopterSprite=createSprite(width/2, 200, 10,10);
-	helicopterSprite.addImage(helicopterIMG)
-	helicopterSprite.scale=0.6
+	helicopterSprite.addImage(helicopterIMG);
+	helicopterSprite.scale=0.6;
 
+    //ground
 	groundSprite=createSprite(width/2, height-35, width,10);
-	groundSprite.shapeColor=color(255)
+	groundSprite.shapeColor=color(255);
 
 
 	engine = Engine.create();
 	world = engine.world;
-     var package
-	 package = new package
+	
+	
+	//This we cloth on package sprite
 	packageBody = Bodies.circle(width/2 , 200 , 5 , {restitution:0.4, isStatic:true});
 	World.add(world, packageBody);
 	
@@ -47,8 +50,8 @@ function setup() {
  	boxleftSprite=createSprite(boxPosition, boxY, 20,100);
  	boxleftSprite.shapeColor=color(255,0,0);
 
- 	boxLeftBody = Bodies.rectangle(boxPosition+20, boxY, 20,100 , {isStatic:true} );
- 	World.add(world, boxLeftBody);
+ 	//boxLeftBody = Bodies.rectangle(boxPosition+20, boxY, 20,100 , {isStatic:true} );
+ 	//World.add(world, boxLeftBody);
 
  	boxBase=createSprite(boxPosition+100, boxY+40, 200,20);
  	boxBase.shapeColor=color(255,0,0);
@@ -56,36 +59,44 @@ function setup() {
  	boxBottomBody = Bodies.rectangle(boxPosition+100, boxY+45-20, 200,20 , {isStatic:true} );
  	World.add(world, boxBottomBody);
 
- 	boxleftSprite=createSprite(boxPosition+200 , boxY, 20,100);
- 	boxleftSprite.shapeColor=color(255,0,0);
+ 	boxrightSprite=createSprite(boxPosition+200 , boxY, 20,100);
+ 	boxrightSprite.shapeColor=color(255,0,0);
 
- 	boxRightBody = Bodies.rectangle(boxPosition+200-20 , boxY, 20,100 , {isStatic:true} );
- 	World.add(world, boxRightBody);
-
-
-	Engine.run(engine);
+ 	//boxRightBody = Bodies.rectangle(boxPosition+200-20 , boxY, 20,100 , {isStatic:true} );
+ 	//World.add(world, boxRightBody);
+	 
+	 
+	 packageSprite.collide(boxrightSprite);
+	 Engine.run(engine);
   
 }
-
-
 function draw() {
   rectMode(CENTER);
   background(0);
- 
+keycontrols()
   packageSprite.x= packageBody.position.x 
   packageSprite.y= packageBody.position.y 
-  package.display()
-keycontrols();
+  //packageSprite.x=helicopterSprite.x
+  //packageSprite.y=helicopterSprite.y
   drawSprites();
   
   
  
 }
 function keycontrols(){
-if(keyWentDown("RIGHT_ARROW")){
-	helicopter.velocityX=-1
-}
-if(keyWentDown("LEFT_ARROW")){
-	helicopter.velocityX=1
-}
-}
+	if(keyWentDown("LEFT_ARROW")){
+		helicopterSprite.velocityX=-5
+	}
+	if(keyWentDown("RIGHT_ARROW")){
+		helicopterSprite.velocityX=5
+	}
+	if(keyWentUp("LEFT_ARROW")){
+		helicopterSprite.velocityX=0
+	}
+	if(keyWentUp("RIGHT_ARROW")){
+		helicopterSprite.velocityX=0
+	}
+	if(keyDown("DOWN_ARROW")){
+		Matter.Body.setStatic(packageBody,false)
+	}
+	}
